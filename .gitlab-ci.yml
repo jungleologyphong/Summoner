@@ -1,0 +1,113 @@
+stages:
+  - 'install'
+  - 'build-ios'
+  - 'build-android'
+  - 'codepush'
+
+cache:
+  key: ${CI_COMMIT_REF_NAME}
+  paths:
+    - node_modules
+    - ios/Pods
+    - android/.gradle/
+  policy: pull-push
+
+install_dependencies:
+  #image: registry.altamedia.vn/react_native_lib/alta-mobile-template-2022:ci
+  stage: install
+  tags:
+    - mac
+  script:
+    - yarn
+  cache:
+    key: ${CI_COMMIT_REF_NAME} # only apply for current branch
+    paths:
+      - node_modules/
+      - ios/Pods/
+      - android/.gradle/
+    policy: pull-push
+  artifacts:
+    paths:
+      - './node_modules/'
+      - './ios/Pods/'
+      - './android/.gradle/'
+    expire_in: '1 days'
+  only:
+    changes:
+      - package.json
+      - package-lock.json
+      - yarn.lock
+
+build_android:
+  allow_failure: true
+  dependencies:
+    - install_dependencies
+  tags:
+    - android
+  stage: build-android
+  only:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /^ci:\s+release\s*((all)|(android)).*$/
+  script:
+    #    - export NODE_OPTIONS=--openssl-legacy-provider
+    - "[ ! -d './node_modules' ] && yarn"
+    - export LANG=en_US.UTF-8
+    - watchman watch-del-all && rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-*
+    #    - chmod +x node_modules/dtrace-provider/build/node_gyp_bins/python3
+    #    - lsof -i tcp:8081 | awk 'NR!=1 {print $2}' | xargs kill -2 | node -v
+    #    - npm start -- --reset-cache
+    - npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/build/intermediates/res/merged/release/
+    - cd android
+    - chmod +x ./gradlew
+    - ./gradlew assembleRelease
+    - FILE='./android/app/build/outputs/apk/dev/release/app-dev-release.apk' npm run release-appcenter-android
+  artifacts:
+    paths:
+      - 'android/app/build/outputs/'
+    expire_in: '7 days'
+
+build_ios:
+  dependencies:
+    - install_dependencies
+  tags:
+    - mac
+  stage: build-ios
+  allow_failure: true
+  only:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /^ci:\s+release\s*((all)|(ios)).*$/
+  script:
+    - defaults write -g DVTDeveloperAccountUseKeychainService -bool NO
+    - watchman watch-del-all && rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-*
+    - export LANG=en_US.UTF-8
+    # - export NODE_OPTIONS=--openssl-legacy-provider
+    - "[ ! -d './node_modules' ] && yarn"
+    #    - npm start -- --reset-cache
+    - cd ios
+      # - chmod +x node_modules/dtrace-provider/build/node_gyp_bins/python3
+    # - export SRCROOT=$(pwd)
+    - "[ ! -d './Pods' ] && pod install"
+    #    - lsof -i tcp:8081 | awk 'NR!=1 {print $2}' | xargs kill -2 | node -v
+    - xcodebuild -workspace ./altaTemplate.xcworkspace -scheme EnvDev -archivePath ../dist/altaTemplate.xcarchive archive -quiet -allowProvisioningUpdates
+    - cd ../ && xcodebuild -exportArchive -archivePath ./dist/altaTemplate.xcarchive -exportPath ./dist -exportOptionsPlist ./ExportOptions.plist  -allowProvisioningUpdates -quiet
+    - npx appcenter distribute release --app ALTA-2021/TEST-RELEASE --file "./dist/altaTemplateDev.ipa" --group all
+
+  artifacts:
+    paths:
+      - 'dist'
+    expire_in: '7 days'
+
+code_push:
+  dependencies:
+    - install_dependencies
+    - build_ios
+    - build_android
+  tags:
+    - mac
+  stage: codepush
+  allow_failure: true
+  script:
+    - "[ ! -d './node_modules' ] && yarn"
+    - export LANG=en_US.UTF-8
+    - yarn run android-code-push-dev
+    - yarn run ios-code-push-dev

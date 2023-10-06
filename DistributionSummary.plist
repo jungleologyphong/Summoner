@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>altaTemplateDev.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>arm64</string>
+			</array>
+			<key>buildNumber</key>
+			<string>1</string>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>C88546E3D2609839BC3D39B15985FA6E8796A468</string>
+				<key>dateExpires</key>
+				<string>03/04/2025</string>
+				<key>type</key>
+				<string>Cloud Managed iOS Distribution</string>
+			</dict>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>74J3L4F2TH.com.alta.altaTemplate</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>74J3L4F2TH</string>
+				<key>get-task-allow</key>
+				<false/>
+			</dict>
+			<key>name</key>
+			<string>altaTemplateDev.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>8a4f26a4-b1d3-445d-a608-734d62fc8d9f</string>
+				<key>dateExpires</key>
+				<string>24/02/2024</string>
+				<key>name</key>
+				<string>iOS Team Inhouse Provisioning Profile: com.alta.altaTemplate</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>74J3L4F2TH</string>
+				<key>name</key>
+				<string></string>
+			</dict>
+			<key>versionNumber</key>
+			<string>1.0</string>
+		</dict>
+	</array>
+</dict>
+</plist>

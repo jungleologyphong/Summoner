@@ -37,3 +37,16 @@ export const calcCharWidth = (text: string) => {
   }, 0);
   return w + text.length * 0.15;
 };
+
+export const convertStringIndexFirst = (str: string): string => {
+  const arrayOld = str.split(' ');
+
+  const arrayConvert = arrayOld.map((str: string) => {
+    const autoConvert = str.toLowerCase();
+    return autoConvert.charAt(0).toUpperCase() + autoConvert.slice(1);
+  });
+
+  const result = arrayConvert.join(' ');
+
+  return result;
+};

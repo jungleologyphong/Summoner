@@ -5,11 +5,13 @@ import profileStore from './authentication/profileStore';
 import settingStore from './setting/settingStore';
 
 import appStore from './app/appStore';
+import userStore from './user/userStore';
 
 const appReducer = combineReducers({
   appStore: appStore.reducer,
   profileStore: profileStore.reducer,
   settingStore: settingStore.reducer,
+  userStore: userStore.reducer,
 });
 const profile = createWhitelistFilter('profileStore', ['token', 'user']);
 const setting = createWhitelistFilter('settingStore', [

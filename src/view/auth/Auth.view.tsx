@@ -3,29 +3,20 @@ import {
   View,
   Text,
   TouchableOpacity,
-  TextInput,
-  ImageBackground,
   Image,
   Animated,
   Easing,
 } from 'react-native';
 import {styles} from './Auth.styles';
 import {AuthLogic} from './Auth.logic';
-import {FlatButton, FullScreenLoadingIndicator} from '~components';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-  heightPercentageToDP,
-} from 'react-native-responsive-screen';
-import authPresenter from '~modules/authentication/presenter';
-import {useSingleAsync, useAltaIntl} from '~core/helper';
-import settingStore from '~modules/setting/settingStore';
+import {useAltaIntl} from '~core/helper';
 import {getSource} from '~assets';
 import {navigate} from '~core/helper/navigate';
+
 export const Auth: React.FC<any> = props => {
   const {} = props;
   const {translate} = useAltaIntl();
-  const {dispatch, language, time, test} = AuthLogic();
+  const {} = AuthLogic();
   const fadeAnim = useState(new Animated.Value(0))[0];
 
   useEffect(() => {
@@ -74,7 +65,7 @@ export const Auth: React.FC<any> = props => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.btnLoginRiot}
-            onPress={() => navigate('Auth')}>
+            onPress={() => navigate('Home')}>
             <Image source={getSource('ICONS_RIOT')} style={styles.iconsRiot} />
             <Text style={styles.textLoginRiot}>
               Đăng nhập với tài khoản Riot

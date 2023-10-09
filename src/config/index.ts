@@ -6,7 +6,8 @@ export const env_set: any = {
   Dev: {
     mqtt: 'mqtt://vernemq.altacloud.biz:1883',
     clientId: '000011113',
-    API_BASE_URL: 'https://vcpmc-api.vcpmc.org/api/',
+    API_KEY: 'RGAPI-8f7d4ffc-e1f0-4a23-8686-fa8f8304c2eb',
+    API_BASE_URL: 'https://vn2.api.riotgames.com',
     APP_NAME: 'MOBILE',
     fvers: '0.0.1',
     codePush: Platform.select({
@@ -21,7 +22,8 @@ export const env_set: any = {
   Pro: {
     mqtt: 'mqtt://vernemq.altacloud.biz:1883',
     clientId: '000011113',
-    API_BASE_URL: 'https://vcpmc-api.vcpmc.org/api/',
+    API_KEY: 'RGAPI-8f7d4ffc-e1f0-4a23-8686-fa8f8304c2eb',
+    API_BASE_URL: 'https://vn2.api.riotgames.com',
     APP_NAME: 'MOBILE',
     fvers: '0.0.1',
     codePush: Platform.select({

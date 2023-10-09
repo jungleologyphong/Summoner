@@ -53,13 +53,15 @@ export class HTTPRepository {
     showSuccess: boolean,
   ) {
     if (showSuccess) {
+      console.log('Response:', response);
+
       Toast.show({
         type: 'success',
         text1: locale[this.language].success,
       });
     }
     if (convert !== undefined) {
-      return Promise.resolve(convert(response.data?.data));
+      return Promise.resolve(convert(response));
     }
     return Promise.resolve(response);
   }
@@ -198,4 +200,5 @@ export class HTTPRepository {
   }
 }
 const httpRepository = new HTTPRepository(env_set[name].API_BASE_URL, store);
+
 export default httpRepository;

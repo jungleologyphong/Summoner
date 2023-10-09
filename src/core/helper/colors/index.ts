@@ -25,3 +25,11 @@ export const hex2rgb = (hex: string) => {
   }
   return rgb;
 };
+
+export const colorBoard = {
+  white: '#FFFFFF',
+  black: '#000000',
+  gray_0B8: '#B3B0B8',
+  backgroundColorApp: '#101114',
+  borderAvatarSummoner: '#AD4CFE',
+};

@@ -1,7 +1,22 @@
-import moment from 'moment';
+interface UserEntity {
+  id: string;
+  accountId: string;
+  puuid: string;
+  name: string;
+  profileIconId: number;
+  revisionData: number;
+  summonerLevel: number;
+}
 
 class UserEntity {
   id = '';
+  accountId = '';
+  puuid = '';
+  name = '';
+  profileIconId = 0;
+  revisionData = 0;
+  summonerLevel = 0;
+
   constructor(user?: Partial<UserEntity>) {
     if (!user) {
       return;

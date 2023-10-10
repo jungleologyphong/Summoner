@@ -6,12 +6,14 @@ import settingStore from './setting/settingStore';
 
 import appStore from './app/appStore';
 import userStore from './user/userStore';
+import rankedStore from './ranked/rankedStore';
 
 const appReducer = combineReducers({
   appStore: appStore.reducer,
   profileStore: profileStore.reducer,
   settingStore: settingStore.reducer,
   userStore: userStore.reducer,
+  rankedStore: rankedStore.reducer,
 });
 const profile = createWhitelistFilter('profileStore', ['token', 'user']);
 const setting = createWhitelistFilter('settingStore', [

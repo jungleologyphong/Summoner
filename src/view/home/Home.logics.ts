@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import store from '~core/store';
 import userStore, {UserSelector} from '~modules/user/userStore';
 import {useSelector} from 'react-redux';
@@ -9,14 +9,18 @@ import rankedStore, {RankedSelector} from '~modules/ranked/rankedStore';
 export const HomeScreenLogics = () => {
   const users = useSelector(UserSelector);
   const rankedOfUser = useSelector(RankedSelector);
-
+  const [data, setData] = useState<[]>([]);
   const getLatestChampionDDragon = async () => {
     axios
       .get(
         'https://ddragon.leagueoflegends.com/cdn/13.19.1/data/en_US/champion.json',
       )
       .then(res => {
-        console.log(res);
+        setData(res.data.data);
+
+        const arr = Object.values(res.data.data);
+
+        setData(arr);
       });
   };
 
@@ -25,8 +29,14 @@ export const HomeScreenLogics = () => {
       getRankFromUser(users.id)
         .then(res => {
           store.dispatch(rankedStore.actions.setRankedOfUsers(res));
-
-          getChampionMastery;
+          getLatestChampionDDragon();
+          getChampionMastery(users.puuid)
+            .then(res => {
+              console.log(res);
+            })
+            .catch(error => {
+              console.log(error);
+            });
         })
         .catch(error => {
           console.log(error);
@@ -44,5 +54,5 @@ export const HomeScreenLogics = () => {
       });
   }, []);
 
-  return {users, rankedOfUser};
+  return {users, rankedOfUser, data};
 };

@@ -1,10 +1,9 @@
-import userPresenter from '~modules/user/presenter';
-import {useEffect, useState} from 'react';
-import RankedEntity from '~modules/ranked/entity';
+import {useEffect} from 'react';
 import store from '~core/store';
 import userStore, {UserSelector} from '~modules/user/userStore';
 import {useSelector} from 'react-redux';
 import {getProfileConfig, getRankFromUser} from '~modules/user/repository';
+import {getChampionMastery} from '~modules/championMastery/repository';
 import axios from 'axios';
 import rankedStore, {RankedSelector} from '~modules/ranked/rankedStore';
 export const HomeScreenLogics = () => {
@@ -26,6 +25,8 @@ export const HomeScreenLogics = () => {
       getRankFromUser(users.id)
         .then(res => {
           store.dispatch(rankedStore.actions.setRankedOfUsers(res));
+
+          getChampionMastery;
         })
         .catch(error => {
           console.log(error);

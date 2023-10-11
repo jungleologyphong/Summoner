@@ -6,7 +6,7 @@ import {HomeScreenLogics} from './Home.logics';
 import {convertStringIndexFirst} from '~core';
 
 export const HomeScreen: React.FC<any> = () => {
-  const {users, rankedOfUser, data} = HomeScreenLogics();
+  const {users, rankedOfUser, data, dataMastery} = HomeScreenLogics();
 
   console.log(data);
 
@@ -24,6 +24,8 @@ export const HomeScreen: React.FC<any> = () => {
         summerTier={rankedOfUser[0]?.tier}
       />
       <FlatList
+        initialNumToRender={10}
+        horizontal
         keyExtractor={item => item.id + ''}
         style={{flex: 1, height: '100%', width: '100%'}}
         data={data}

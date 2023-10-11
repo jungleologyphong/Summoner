@@ -6,10 +6,14 @@ import {getProfileConfig, getRankFromUser} from '~modules/user/repository';
 import {getChampionMastery} from '~modules/championMastery/repository';
 import axios from 'axios';
 import rankedStore, {RankedSelector} from '~modules/ranked/rankedStore';
+import ChampionMasteryEntity from '~modules/championMastery/entity';
+import ChampionEntity from '~modules/champion/entity';
 export const HomeScreenLogics = () => {
   const users = useSelector(UserSelector);
   const rankedOfUser = useSelector(RankedSelector);
-  const [data, setData] = useState<[]>([]);
+  const [data, setData] = useState<ChampionEntity[]>([]);
+  const [dataMastery, setDataMastery] = useState<ChampionMasteryEntity[]>([]);
+
   const getLatestChampionDDragon = async () => {
     axios
       .get(
@@ -18,21 +22,27 @@ export const HomeScreenLogics = () => {
       .then(res => {
         setData(res.data.data);
 
-        const arr = Object.values(res.data.data);
+        const arr: ChampionEntity[] = Object.values(res.data.data);
 
         setData(arr);
       });
   };
+
+  console.log('Data champion: ', data);
+
+  console.log('Data mastery:', dataMastery);
 
   useEffect(() => {
     if (users) {
       getRankFromUser(users.id)
         .then(res => {
           store.dispatch(rankedStore.actions.setRankedOfUsers(res));
+
           getLatestChampionDDragon();
+
           getChampionMastery(users.puuid)
             .then(res => {
-              console.log(res);
+              setDataMastery(res);
             })
             .catch(error => {
               console.log(error);
@@ -54,5 +64,5 @@ export const HomeScreenLogics = () => {
       });
   }, []);
 
-  return {users, rankedOfUser, data};
+  return {users, rankedOfUser, data, dataMastery};
 };

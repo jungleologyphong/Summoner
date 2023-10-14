@@ -200,6 +200,66 @@ interface MatchHistory {
   gameVersion: string;
   mapId: number;
   participants: ParticipantsProps[];
+  physicalDamageDealt: number;
+  physicalDamageDealtToChampions: number;
+  physicalDamageTaken: number;
+  placement: number;
+  playerAugment1: number;
+  playerAugment2: number;
+  playerAugment3: number;
+  playerAugment4: number;
+  playerSubteamId: number;
+  profileIcon: number;
+  pushPings: number;
+  puuid: string;
+  quadraKills: number;
+  riotIdName: string;
+  riotIdTagline: string;
+  role: string;
+  sightWardsBoughtInGame: number;
+  spell1Casts: number;
+  spell2Casts: number;
+  spell3Casts: number;
+  spell4Casts: number;
+  subteamPlacement: number;
+  summoner1Casts: number;
+  summoner1Id: number;
+  summoner2Casts: number;
+  summoner2Id: number;
+  summonerId: string;
+  summonerLevel: number;
+  summonerName: string;
+  teamEarlySurrendered: boolean;
+  teamId: number;
+  teamPosition: string;
+  timeCCingOthers: number;
+  timePlayed: number;
+  totalAllyJungleMinionsKilled: number;
+  totalDamageDealt: number;
+  totalDamageDealtToChampions: number;
+  totalDamageShieldedOnTeammates: number;
+  totalDamageTaken: number;
+  totalEnemyJungleMinionsKilled: number;
+  totalHeal: number;
+  totalHealsOnTeammates: number;
+  totalMinionsKilled: number;
+  totalTimeCCDealt: number;
+  totalTimeSpentDead: number;
+  totalUnitsHealed: number;
+  tripleKills: number;
+  trueDamageDealt: number;
+  trueDamageDealtToChampions: number;
+  trueDamageTaken: number;
+  turretKills: number;
+  turretTakedowns: number;
+  turretsLost: number;
+  unrealKills: number;
+  visionClearedPings: number;
+  visionScore: number;
+  visionWardsBoughtInGame: number;
+  wardsKilled: number;
+  wardsPlaced: number;
+  win: boolean;
 }
 
 class MatchHistoriesEntity {
@@ -213,21 +273,82 @@ class MatchHistoriesEntity {
   gameType = '';
   gameVersion = '';
   mapId = 0;
+  participants!: ParticipantsProps[] | [];
+  physicalDamageDealt = 0;
+  physicalDamageDealtToChampions = 0;
+  physicalDamageTaken = 0;
+  placement = 0;
+  playerAugment1 = 0;
+  playerAugment2 = 0;
+  playerAugment3 = 0;
+  playerAugment4 = 0;
+  playerSubteamId = 0;
+  profileIcon = 0;
+  pushPings = 0;
+  puuid = '';
+  quadraKills = 0;
+  riotIdName = '';
+  riotIdTagline = '';
+  role = '';
+  sightWardsBoughtInGame = 0;
+  spell1Casts = 0;
+  spell2Casts = 0;
+  spell3Casts = 0;
+  spell4Casts = 0;
+  subteamPlacement = 0;
+  summoner1Casts = 0;
+  summoner1Id = 0;
+  summoner2Casts = 0;
+  summoner2Id = 0;
+  summonerId = '';
+  summonerLevel = 0;
+  summonerName = '';
+  teamEarlySurrendered = false;
+  teamId = 0;
+  teamPosition = '';
+  timeCCingOthers = 0;
+  timePlayed = 0;
+  totalAllyJungleMinionsKilled = 0;
+  totalDamageDealt = 0;
+  totalDamageDealtToChampions = 0;
+  totalDamageShieldedOnTeammates = 0;
+  totalDamageTaken = 0;
+  totalEnemyJungleMinionsKilled = 0;
+  totalHeal = 0;
+  totalHealsOnTeammates = 0;
+  totalMinionsKilled = 0;
+  totalTimeCCDealt = 0;
+  totalTimeSpentDead = 0;
+  totalUnitsHealed = 0;
+  tripleKills = 0;
+  trueDamageDealt = 0;
+  trueDamageDealtToChampions = 0;
+  trueDamageTaken = 0;
+  turretKills = 0;
+  turretTakedowns = 0;
+  turretsLost = 0;
+  unrealKills = 0;
+  visionClearedPings = 0;
+  visionScore = 0;
+  visionWardsBoughtInGame = 0;
+  wardsKilled = 0;
+  wardsPlaced = 0;
+  win = false;
 
-  constructor(championMastery?: Partial<MatchHistory>) {
-    if (!championMastery) {
+  constructor(matchHistory?: Partial<MatchHistory>) {
+    if (!matchHistory) {
       return;
     }
-    Object.assign(this, championMastery);
+    Object.assign(this, matchHistory);
   }
 
   static createArrayChampionMastery(
-    arrChampionMastery?: Array<Partial<MatchHistory>>,
+    arrMatchHistory?: Array<Partial<MatchHistory>>,
   ): Array<MatchHistory> {
-    if (arrChampionMastery == null || arrChampionMastery.length === 0) {
+    if (arrMatchHistory == null || arrMatchHistory.length === 0) {
       return [];
     }
-    const list = arrChampionMastery.map(x => new MatchHistoriesEntity(x));
+    const list = arrMatchHistory.map(x => new MatchHistoriesEntity(x));
 
     return list;
   }

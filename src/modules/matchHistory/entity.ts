@@ -186,20 +186,6 @@ interface ParticipantsProps {
   onMyWayPings: number;
   participantId: number;
   pentaKills: number;
-}
-
-interface MatchHistory {
-  gameCreation: number;
-  gameDuration: number;
-  gameEndTimestamp: number;
-  gameId: number;
-  gameMode: string;
-  gameName: string;
-  gameStartTimestamp: number;
-  gameType: string;
-  gameVersion: string;
-  mapId: number;
-  participants: ParticipantsProps[];
   physicalDamageDealt: number;
   physicalDamageDealtToChampions: number;
   physicalDamageTaken: number;
@@ -262,6 +248,20 @@ interface MatchHistory {
   win: boolean;
 }
 
+interface MatchHistory {
+  gameCreation: number;
+  gameDuration: number;
+  gameEndTimestamp: number;
+  gameId: number;
+  gameMode: string;
+  gameName: string;
+  gameStartTimestamp: number;
+  gameType: string;
+  gameVersion: string;
+  mapId: number;
+  participants: ParticipantsProps[];
+}
+
 class MatchHistoriesEntity {
   gameCreation = 0;
   gameDuration = 0;
@@ -274,66 +274,6 @@ class MatchHistoriesEntity {
   gameVersion = '';
   mapId = 0;
   participants!: ParticipantsProps[] | [];
-  physicalDamageDealt = 0;
-  physicalDamageDealtToChampions = 0;
-  physicalDamageTaken = 0;
-  placement = 0;
-  playerAugment1 = 0;
-  playerAugment2 = 0;
-  playerAugment3 = 0;
-  playerAugment4 = 0;
-  playerSubteamId = 0;
-  profileIcon = 0;
-  pushPings = 0;
-  puuid = '';
-  quadraKills = 0;
-  riotIdName = '';
-  riotIdTagline = '';
-  role = '';
-  sightWardsBoughtInGame = 0;
-  spell1Casts = 0;
-  spell2Casts = 0;
-  spell3Casts = 0;
-  spell4Casts = 0;
-  subteamPlacement = 0;
-  summoner1Casts = 0;
-  summoner1Id = 0;
-  summoner2Casts = 0;
-  summoner2Id = 0;
-  summonerId = '';
-  summonerLevel = 0;
-  summonerName = '';
-  teamEarlySurrendered = false;
-  teamId = 0;
-  teamPosition = '';
-  timeCCingOthers = 0;
-  timePlayed = 0;
-  totalAllyJungleMinionsKilled = 0;
-  totalDamageDealt = 0;
-  totalDamageDealtToChampions = 0;
-  totalDamageShieldedOnTeammates = 0;
-  totalDamageTaken = 0;
-  totalEnemyJungleMinionsKilled = 0;
-  totalHeal = 0;
-  totalHealsOnTeammates = 0;
-  totalMinionsKilled = 0;
-  totalTimeCCDealt = 0;
-  totalTimeSpentDead = 0;
-  totalUnitsHealed = 0;
-  tripleKills = 0;
-  trueDamageDealt = 0;
-  trueDamageDealtToChampions = 0;
-  trueDamageTaken = 0;
-  turretKills = 0;
-  turretTakedowns = 0;
-  turretsLost = 0;
-  unrealKills = 0;
-  visionClearedPings = 0;
-  visionScore = 0;
-  visionWardsBoughtInGame = 0;
-  wardsKilled = 0;
-  wardsPlaced = 0;
-  win = false;
 
   constructor(matchHistory?: Partial<MatchHistory>) {
     if (!matchHistory) {
@@ -353,3 +293,5 @@ class MatchHistoriesEntity {
     return list;
   }
 }
+
+export default MatchHistoriesEntity;

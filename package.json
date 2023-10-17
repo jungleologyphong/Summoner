@@ -1,5 +1,5 @@
 {
-  "name": "altaTemplate",
+  "name": "Summoner",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -45,7 +45,7 @@
     "react-native-config": "^1.0.0",
     "react-native-fast-image": "^8.6.3",
     "react-native-gesture-handler": "^2.3.2",
-    "react-native-linear-gradient": "^2.5.6",
+    "react-native-linear-gradient": "^2.8.3",
     "react-native-material-ripple": "^0.9.1",
     "react-native-modal": "^13.0.1",
     "react-native-permissions": "^3.3.1",

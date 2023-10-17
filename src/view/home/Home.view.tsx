@@ -1,18 +1,15 @@
 import React from 'react';
-import {FlatList, Image, ScrollView, Text, View} from 'react-native';
+import {FlatList, ScrollView, Text, View} from 'react-native';
 import {HeaderProfile} from '~components/headerProfile/headerProfile';
 import {styles} from './Home.styles';
 import {HomeScreenLogics} from './Home.logics';
-import {colorBoard, convertStringIndexFirst} from '~core';
+import {convertStringIndexFirst} from '~core';
 import {FullScreenLoadingIndicator} from '~components';
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import {Font} from '~assets/fonts';
-import {getSource} from '~assets';
-import {ItemChampionMastery} from './components/ItemChampionMastery';
-import {find} from 'lodash';
+import {ItemChampionMastery, ItemMatchHistory} from './components';
 
 export const HomeScreen: React.FC<any> = () => {
   const {
@@ -22,27 +19,29 @@ export const HomeScreen: React.FC<any> = () => {
     championMastery,
     findChampionById,
     baseURLImage,
+    matchHistory,
   } = HomeScreenLogics();
 
   return (
     <View style={styles.container}>
-      <View style={styles.containerContent}>
-        {users && rankedOfUser && rankedOfUser.length !== 0 ? (
-          <HeaderProfile
-            avatarSummoner={users.profileIconId.toString()}
-            summonerName={users.name}
-            summonerRank={
-              convertStringIndexFirst(rankedOfUser[0].tier) +
-              ' ' +
-              rankedOfUser[0].rank.toUpperCase()
-            }
-            summonerLevel={users?.summonerLevel}
-            summerTier={rankedOfUser[0].tier}
-          />
-        ) : (
-          <FullScreenLoadingIndicator visible={true} />
-        )}
-        <ScrollView>
+      <ScrollView>
+        <View style={styles.containerContent}>
+          {users && rankedOfUser && rankedOfUser.length !== 0 ? (
+            <HeaderProfile
+              avatarSummoner={users.profileIconId.toString()}
+              summonerName={users.name}
+              summonerRank={
+                convertStringIndexFirst(rankedOfUser[0].tier) +
+                ' ' +
+                rankedOfUser[0].rank.toUpperCase()
+              }
+              summonerLevel={users?.summonerLevel}
+              summerTier={rankedOfUser[0].tier}
+            />
+          ) : (
+            <FullScreenLoadingIndicator visible={true} />
+          )}
+
           <View style={styles.containerTextChampMastery}>
             <Text style={styles.textMastery}>Your Champions</Text>
           </View>
@@ -78,8 +77,19 @@ export const HomeScreen: React.FC<any> = () => {
           <View style={styles.containerChampRecommend}>
             <Text style={styles.textMastery}>Match History</Text>
           </View>
-        </ScrollView>
-      </View>
+          {matchHistory && matchHistory.length !== 0 ? (
+            <FlatList
+              style={{height: hp('60%%'), marginVertical: wp('2.5%')}}
+              nestedScrollEnabled
+              keyExtractor={item => item.gameId + ''}
+              data={matchHistory ? matchHistory : []}
+              renderItem={({item, index}) => <ItemMatchHistory item={item} />}
+            />
+          ) : (
+            <FullScreenLoadingIndicator visible={true} />
+          )}
+        </View>
+      </ScrollView>
     </View>
   );
 };

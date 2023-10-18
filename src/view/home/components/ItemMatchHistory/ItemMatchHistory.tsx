@@ -37,6 +37,20 @@ export const ItemMatchHistory: React.FC<ItemMatchHistoryProps> = props => {
     return {year, month, day, hours, minutes, seconds};
   };
 
+  const assists = item.participants.find(
+    item => item.summonerName === 'Hide On Bushhhh',
+  )?.assists;
+
+  const kills = item.participants.find(
+    item => item.summonerName === 'Hide On Bushhhh',
+  )?.kills;
+
+  const deaths = item.participants.find(
+    item => item.summonerName === 'Hide On Bushhhh',
+  )?.deaths;
+
+  const calculatorKDA = (Number(kills) + Number(assists)) / Number(deaths);
+
   return (
     <LinearGradient
       start={{x: 0, y: 2}}
@@ -81,6 +95,37 @@ export const ItemMatchHistory: React.FC<ItemMatchHistoryProps> = props => {
             }.png`,
           }}
         />
+      </View>
+      <View style={{alignItems: 'center'}}>
+        <Text style={styles.txtKDA}>
+          {
+            item.participants.find(
+              item => item.summonerName === 'Hide On Bushhhh',
+            )?.kills
+          }
+          {'/'}
+          {
+            item.participants.find(
+              item => item.summonerName === 'Hide On Bushhhh',
+            )?.deaths
+          }
+          {'/'}
+          {
+            item.participants.find(
+              item => item.summonerName === 'Hide On Bushhhh',
+            )?.assists
+          }
+        </Text>
+        <Text style={styles.txtCS}>
+          {calculatorKDA.toFixed(2) + ' ' + 'KDA'}
+        </Text>
+        <Text style={styles.txtCS}>
+          {item.participants.find(
+            item => item.summonerName === 'Hide On Bushhhh',
+          )?.totalMinionsKilled +
+            ' ' +
+            'CS'}
+        </Text>
       </View>
     </LinearGradient>
   );

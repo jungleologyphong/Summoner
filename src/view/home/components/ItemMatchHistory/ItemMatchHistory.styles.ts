@@ -9,7 +9,7 @@ import {colorBoard} from '~core';
 export const styles = StyleSheet.create({
   linearGradient: {
     flex: 1,
-    borderRadius: wp('5%'),
+    borderRadius: wp('1.5%'),
     width: wp('95%'),
     height: hp('12.5%'),
     flexDirection: 'row',
@@ -60,5 +60,21 @@ export const styles = StyleSheet.create({
     height: wp('12.5%'),
     resizeMode: 'contain',
     borderRadius: wp('100%'),
+  },
+  txtKDA: {
+    color: colorBoard.white,
+    fontFamily: Font.DMSansBold,
+    fontWeight: 'bold',
+    fontSize: wp('4.25%'),
+    marginHorizontal: wp('1.5%'),
+    width: wp('20%'),
+    textAlign: 'center',
+  },
+  txtCS: {
+    color: colorBoard.gray_F2F2,
+    fontFamily: Font.DMSansBold,
+    fontWeight: 'bold',
+    fontSize: wp('4.25%'),
+    marginHorizontal: wp('1.5%'),
   },
 });

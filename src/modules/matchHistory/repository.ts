@@ -14,6 +14,7 @@ export const getArrayMatchId = async (
   params: PayloadGetMatchIdProps,
   puuid: string,
 ): Promise<string[]> => {
+  console.log(params);
   return await httpRepository.execute({
     path: `https://sea.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?startTime=${params.startTime}&endTime=${params.endTime}&type=${params.type}&start=0&count=${params.count}&api_key=RGAPI-e79b9f2d-07d3-48ec-84b7-f0e92e14bfa1`,
     method: 'get',

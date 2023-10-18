@@ -73,11 +73,29 @@ export const HomeScreenLogics = () => {
       });
   };
 
+  const getCurrentDate = async () => {
+    const currentDay = new Date();
+    currentDay.setHours(23, 59, 59);
+    const timeUnix = Math.floor(currentDay.getTime() / 1000);
+
+    return await timeUnix;
+  };
+
+  const getLastSevenDate = async () => {
+    const currentDay = new Date();
+
+    currentDay.setDate(currentDay.getDate() - 7);
+
+    const timeUnixLastSevenDay = Math.floor(currentDay.getTime() / 1000);
+
+    return await timeUnixLastSevenDay;
+  };
+
   const fnc_getArrayMatchId = async (puuid: string) => {
     getArrayMatchId(
       {
-        startTime: 1697389200,
-        endTime: 1697475600,
+        startTime: await getLastSevenDate(),
+        endTime: await getCurrentDate(),
         queue: 0,
         type: 'ranked',
         start: 0,

@@ -1,4 +1,4 @@
-package com.altaTemplate;
+package com.summoner;
 
 import android.os.Bundle;
 

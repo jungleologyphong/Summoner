@@ -5,7 +5,7 @@ export const getChampionMastery = async (
   encryptedSummonerId: string,
 ): Promise<ChampionMasteryEntity[]> => {
   return await httpRepository.execute({
-    path: `https://vn2.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/${encryptedSummonerId}?api_key=${'RGAPI-c4a4fcc3-1060-4149-a094-a3f259ac3877'}`,
+    path: `https://vn2.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/${encryptedSummonerId}?api_key=${'RGAPI-e79b9f2d-07d3-48ec-84b7-f0e92e14bfa1'}`,
     method: 'get',
     showSuccess: true,
     showError: false,

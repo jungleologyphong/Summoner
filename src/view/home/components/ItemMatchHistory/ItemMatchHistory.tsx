@@ -37,13 +37,6 @@ export const ItemMatchHistory: React.FC<ItemMatchHistoryProps> = props => {
     return {year, month, day, hours, minutes, seconds};
   };
 
-  console.log(
-    `${baseURLImage}/${
-      item.participants.find(item => item.summonerName === 'Hide On Bushhhh')
-        ?.championName
-    }.png`,
-  );
-
   return (
     <LinearGradient
       start={{x: 0, y: 2}}
@@ -56,46 +49,20 @@ export const ItemMatchHistory: React.FC<ItemMatchHistoryProps> = props => {
       }
       style={styles.linearGradient}>
       <View style={{flexDirection: 'column', alignItems: 'center'}}>
-        <Text
-          style={{
-            color: colorBoard.white,
-            fontSize: wp('4.25%'),
-            fontWeight: 'bold',
-            fontFamily: Font.DMSansBold,
-          }}>
+        <Text style={styles.txtTypeGame}>
           {item.participants.find(
             item => item.summonerName === 'Hide On Bushhhh',
           )?.win
             ? 'VICTORY'
             : 'LOSE'}
         </Text>
-        <Text
-          style={{
-            color: colorBoard.gray_0B8,
-            fontSize: wp('3.25%'),
-            fontWeight: '500',
-            fontFamily: Font.DMSansBold,
-          }}>
-          RANKED
-        </Text>
-        <Text
-          style={{
-            color: colorBoard.gray_0B8,
-            fontSize: wp('3.25%'),
-            fontWeight: '500',
-            fontFamily: Font.DMSansBold,
-          }}>
+        <Text style={styles.txtRanked}>RANKED</Text>
+        <Text style={styles.durationGame}>
           {convertMinutesAndSeconds(item.gameDuration).minutes +
             ':' +
             convertMinutesAndSeconds(item.gameDuration).remainingSeconds}
         </Text>
-        <Text
-          style={{
-            color: colorBoard.gray_0B8,
-            fontSize: wp('3.25%'),
-            fontWeight: '500',
-            fontFamily: Font.DMSansBold,
-          }}>
+        <Text style={styles.dateTimeGame}>
           {convertUnixToDateTime(item.gameCreation).day +
             '/' +
             convertUnixToDateTime(item.gameCreation).month +
@@ -103,20 +70,9 @@ export const ItemMatchHistory: React.FC<ItemMatchHistoryProps> = props => {
             convertUnixToDateTime(item.gameCreation).year}
         </Text>
       </View>
-      <View
-        style={{
-          borderRadius: wp('100%'),
-          borderWidth: wp('0.25%'),
-          borderColor: colorBoard.white,
-          marginHorizontal: wp('2.5%'),
-        }}>
+      <View style={styles.coverImage}>
         <Image
-          style={{
-            width: wp('12.5%'),
-            height: wp('12.5%'),
-            resizeMode: 'contain',
-            borderRadius: wp('100%'),
-          }}
+          style={styles.imgChampion}
           source={{
             uri: `${baseURLImage}/${
               item.participants.find(

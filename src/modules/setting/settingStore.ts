@@ -1,3 +1,4 @@
+import {API_KEY} from './../../config/index';
 import {
   createAction,
   createSlice,
@@ -10,6 +11,7 @@ interface IStore {
   mode: string;
   splashLoad: boolean;
   mqttConnected: boolean;
+  API_KEY: string;
 }
 export const setMqttConnected = createAction<any>('setting/setConnected');
 
@@ -28,6 +30,12 @@ const settingStore = createSlice({
       return {
         ...state,
         splashLoad: true,
+      };
+    },
+    setAPI_KEY: (state, action: PayloadAction) => {
+      return {
+        ...state,
+        API_KEY: 'RGAPI-e79b9f2d-07d3-48ec-84b7-f0e92e14bfa1',
       };
     },
     setMode: (state, action: PayloadAction<string>) =>
@@ -69,6 +77,11 @@ interface IMqtt {
 export const MqttSelector: Selector<RootState, IMqtt> = state => {
   return {
     mqttConnected: state.settingStore.mqttConnected,
+  };
+};
+export const API_KEYSelector: Selector<RootState> = state => {
+  return {
+    API_KEY: state.settingStore.API_KEY,
   };
 };
 

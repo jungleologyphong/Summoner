@@ -12,24 +12,22 @@ export const styles = StyleSheet.create({
     width: wp('95%'),
     height: hp('10%'),
     alignItems: 'center',
-    paddingHorizontal: wp('2.5%'),
     justifyContent: 'space-between',
     marginTop: wp('2.5%'),
   },
   containerLeft: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: wp('55%'),
+    width: wp('50%'),
   },
   iconsSearch: {
-    marginLeft: wp('3.5%'),
     width: wp('8%'),
     height: wp('8%'),
     resizeMode: 'contain',
   },
   iconDiamond: {
     zIndex: 2,
-    marginLeft: wp('3.5%'),
+
     width: wp('25%'),
     height: wp('25%'),
     resizeMode: 'contain',

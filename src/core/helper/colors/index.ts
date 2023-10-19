@@ -30,6 +30,8 @@ export const colorBoard = {
   white: '#FFFFFF',
   black: '#000000',
   gray_0B8: '#B3B0B8',
+  gray_F1F1: '#F1F1F1',
+  gray_F2F2: '#F2F2F2',
   backgroundColorApp: '#101114',
   borderAvatarSummoner: '#AD4CFE',
 };

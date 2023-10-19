@@ -14,6 +14,12 @@ const SOURCE = {
   ICONS_BORDER_DIAMOND: require('./icons/wings_diamond.png'),
   ICONS_DIAMOND: require('./icons/emblem-diamond.png'),
   ICONS_TIER_DIAMOND: require('./icons/diamond-plate.png'),
+  ICONS_MASTERY_DEFAULT: require('./icons/mastery_icon_default.png'),
+  ICONS_MASTERY_4: require('./icons/mastery_icon_4.png'),
+  ICONS_MASTERY_5: require('./icons/mastery_icon_5.png'),
+  ICONS_MASTERY_6: require('./icons/mastery_icon_6.png'),
+  ICONS_MASTERY_7: require('./icons/mastery_icon_7.png'),
+  ICONS_PLACEHOLDER: require('./icons/item_placeholder.png'),
 };
 
 export const getSource = (source: keyof typeof SOURCE) => {

@@ -1,17 +1,12 @@
-import axios from 'axios';
 import UserEntity from './entity';
 import httpRepository from '~core/http';
-import {env_set} from '~config';
-import store from '~core/store';
-import userStore from './userStore';
-
-const baseURL = 'https://vn2.api.riotgames.com';
+import RankedEntity from '~modules/ranked/entity';
 
 export const getProfileConfig = async (
   summonerName: string,
 ): Promise<UserEntity> => {
   return await httpRepository.execute({
-    path: `/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=RGAPI-8f7d4ffc-e1f0-4a23-8686-fa8f8304c2eb`,
+    path: `/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${'RGAPI-686ac0e5-2465-4b30-84a0-8cb287d15ebf'}`,
     method: 'get',
     showSuccess: true,
     showError: false,
@@ -19,18 +14,14 @@ export const getProfileConfig = async (
   });
 };
 
-export const getProfile = async (summonerName: string) => {
-  return await axios.get(
-    `/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=RGAPI-8f7d4ffc-e1f0-4a23-8686-fa8f8304c2eb`,
-
-    {baseURL: baseURL},
-  );
-};
-
-export const getRankFromUser = async (encryptedSummonerId: string) => {
-  return await axios.get(
-    `/lol/league/v4/entries/by-summoner/${encryptedSummonerId}?api_key=RGAPI-8f7d4ffc-e1f0-4a23-8686-fa8f8304c2eb`,
-
-    {baseURL: baseURL},
-  );
+export const getRankFromUser = async (
+  encryptedSummonerId: string,
+): Promise<RankedEntity[]> => {
+  return await httpRepository.execute({
+    path: `/lol/league/v4/entries/by-summoner/${encryptedSummonerId}?api_key=${'RGAPI-686ac0e5-2465-4b30-84a0-8cb287d15ebf'}`,
+    method: 'get',
+    showSuccess: true,
+    showError: false,
+    convert: res => res.data,
+  });
 };

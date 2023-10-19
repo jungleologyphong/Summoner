@@ -7,8 +7,6 @@ import {
   View,
 } from 'react-native';
 import {styles} from './headerProfile.styles';
-import {colorBoard} from '~core';
-import {widthPercentageToDP} from 'react-native-responsive-screen';
 import {getSource} from '~assets';
 
 interface HeaderProfileInterface {

@@ -13,14 +13,10 @@ interface PayloadGetMatchIdProps {
 export const getArrayMatchId = async (
   params: PayloadGetMatchIdProps,
   puuid: string,
+  API_KEY: string,
 ): Promise<string[]> => {
-  const API_KEY = 'RGAPI-686ac0e5-2465-4b30-84a0-8cb287d15ebf';
   return await httpRepository.execute({
-    path: `https://sea.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?startTime=${
-      params.startTime
-    }&endTime=${params.endTime}&type=${params.type}&start=0&count=${
-      params.count
-    }&api_key=${'RGAPI-686ac0e5-2465-4b30-84a0-8cb287d15ebf'}`,
+    path: `https://sea.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?startTime=${params.startTime}&endTime=${params.endTime}&type=${params.type}&start=0&count=${params.count}&api_key=${API_KEY}`,
     method: 'get',
     showError: true,
     showSuccess: true,
@@ -30,13 +26,13 @@ export const getArrayMatchId = async (
 
 export const getMatchById = async (
   matchId: string,
+  API_KEY: string,
 ): Promise<MatchHistoriesEntity> => {
-  const API_KEY = 'RGAPI-686ac0e5-2465-4b30-84a0-8cb287d15ebf';
   return await httpRepository.execute({
     path:
       'https://sea.api.riotgames.com/lol/match/v5/matches/' +
       `${matchId}` +
-      `?api_key=${'RGAPI-686ac0e5-2465-4b30-84a0-8cb287d15ebf'}`,
+      `?api_key=${API_KEY}`,
     method: 'get',
     showError: true,
     showSuccess: true,

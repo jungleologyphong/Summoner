@@ -42,4 +42,11 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     width: wp('95%'),
   },
+  flatlistChampionMastery: {
+    height: hp('33.5%'),
+  },
+  flatlistMatchHistory: {
+    height: hp('60%%'),
+    marginVertical: wp('2.5%'),
+  },
 });

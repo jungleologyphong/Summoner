@@ -9,16 +9,16 @@ import {RootState} from '~modules';
 import RankedEntity from './entity';
 
 interface IStore {
-  ranked: RankedEntity[];
+  ranked: RankedEntity;
 }
 
 const rankedStore = createSlice({
   name: 'rankedStore',
   initialState: {
-    ranked: [],
+    ranked: null,
   } as any as IStore,
   reducers: {
-    setRankedOfUsers: (state, action: PayloadAction<RankedEntity[]>) => {
+    setRankedOfUsers: (state, action: PayloadAction<RankedEntity>) => {
       return {
         ...state,
         ranked: action.payload,
@@ -27,7 +27,7 @@ const rankedStore = createSlice({
   },
 });
 
-export const RankedSelector: Selector<RootState, RankedEntity[]> = state => {
+export const RankedSelector: Selector<RootState, RankedEntity> = state => {
   return state.rankedStore.ranked;
 };
 

@@ -62,7 +62,7 @@ export const styles = StyleSheet.create({
     borderRadius: wp('100%'),
   },
   imgItemChampion: {
-    borderRadius: wp('0.5%'),
+    borderRadius: wp('1.5%'),
     margin: wp('0.5%'),
     width: wp('7.5%'),
     height: wp('7.5%'),

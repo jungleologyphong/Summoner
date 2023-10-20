@@ -24,10 +24,10 @@ export const styles = StyleSheet.create({
     width: wp('8%'),
     height: wp('8%'),
     resizeMode: 'contain',
+    marginLeft: wp('10%'),
   },
   iconDiamond: {
     zIndex: 2,
-
     width: wp('25%'),
     height: wp('25%'),
     resizeMode: 'contain',
@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
   },
   borderRank: {
     zIndex: 2,
-    width: wp('35%'),
+    width: wp('25%'),
     height: wp('25%'),
     resizeMode: 'contain',
   },

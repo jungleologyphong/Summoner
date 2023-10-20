@@ -1,21 +1,25 @@
-import {MatchHistoriesSelector} from './../../modules/matchHistory/matchHistoriesStore';
 /* eslint-disable no-console */
+import {MatchHistoriesSelector} from './../../modules/matchHistory/matchHistoriesStore';
 import {useEffect, useRef, useState} from 'react';
 import store from '~core/store';
-import userStore, {UserSelector} from '~modules/user/userStore';
+import {UserSelector} from '~modules/user/userStore';
 import {useSelector} from 'react-redux';
-import {getProfileConfig, getRankFromUser} from '~modules/user/repository';
-import {getChampionMastery} from '~modules/championMastery/repository';
 import axios from 'axios';
-import rankedStore, {RankedSelector} from '~modules/ranked/rankedStore';
+import {RankedSelector} from '~modules/ranked/rankedStore';
 import ChampionEntity from '~modules/champion/entity';
-import championMasteryStore, {
-  ChampionMasterySelector,
-} from '~modules/championMastery/champMasteryStore';
+import {ChampionMasterySelector} from '~modules/championMastery/champMasteryStore';
 import {getArrayMatchId, getMatchById} from '~modules/matchHistory/repository';
-
 import MatchHistoriesEntity from '~modules/matchHistory/entity';
 import matchHistoriesStore from '~modules/matchHistory/matchHistoriesStore';
+import userPresenter from '~modules/user/presenter';
+import {
+  findChampionById,
+  getCurrentDate,
+  getLastSevenDate,
+  useSingleAsync,
+} from '~core';
+import championMasteryPresenter from '~modules/championMastery/presenter';
+
 export const HomeScreenLogics = () => {
   const [data, setData] = useState<ChampionEntity[]>([]);
   const dataMatchHistory = useRef<MatchHistoriesEntity[]>([]);
@@ -23,7 +27,13 @@ export const HomeScreenLogics = () => {
   const rankedOfUser = useSelector(RankedSelector);
   const championMastery = useSelector(ChampionMasterySelector);
   const matchHistory = useSelector(MatchHistoriesSelector);
+  const API_KEY = 'RGAPI-fb946d7f-ce31-4ad9-ae1d-2d369d561820';
   const baseURLImage = `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/`;
+  const {getProfileConfig, getRankFromUser} = userPresenter;
+  const {getChampionMastery} = championMasteryPresenter;
+  const getAsyncProfileConfig = useSingleAsync(getProfileConfig);
+  const getAsyncRankFromUser = useSingleAsync(getRankFromUser);
+  const getAsyncChampionMastery = useSingleAsync(getChampionMastery);
 
   const getLatestChampionDDragon = async () => {
     axios
@@ -32,66 +42,11 @@ export const HomeScreenLogics = () => {
       )
       .then(res => {
         const arr: ChampionEntity[] = Object.values(res.data.data);
-
         setData(arr);
       });
   };
 
-  const findChampionById = (data: ChampionEntity[], championId: string) => {
-    const champion = data.find(champion => {
-      if (champion.key === championId) {
-        return champion;
-      }
-    });
-
-    if (champion) {
-      return champion;
-    } else {
-      return null;
-    }
-  };
-
-  const fnc_getRankAndChampionMastery = async (id: string) => {
-    getRankFromUser(id)
-      .then(res => {
-        store.dispatch(rankedStore.actions.setRankedOfUsers(res));
-
-        getLatestChampionDDragon();
-
-        getChampionMastery(users.puuid)
-          .then(res => {
-            store.dispatch(
-              championMasteryStore.actions.setChampionMastery(res),
-            );
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
-  const getCurrentDate = async () => {
-    const currentDay = new Date();
-
-    const timeUnix = Math.floor(currentDay.getTime());
-
-    return await timeUnix;
-  };
-
-  const getLastSevenDate = async () => {
-    const currentDay = new Date();
-
-    currentDay.setDate(currentDay.getDate() - 7);
-
-    const timeUnixLastSevenDay = Math.floor(currentDay.getTime() / 1000);
-
-    return await timeUnixLastSevenDay;
-  };
-
-  const fnc_getArrayMatchId = async (puuid: string) => {
+  const getMatchId = async (puuid: string) => {
     getArrayMatchId(
       {
         startTime: await getLastSevenDate(),
@@ -102,12 +57,13 @@ export const HomeScreenLogics = () => {
         count: 20,
       },
       puuid,
+      API_KEY,
     )
       .then(res => {
         for (let index = 0; index < res.length; index++) {
           const element = res[index];
 
-          getMatchById(element)
+          getMatchById(element, API_KEY)
             .then(res => {
               const newObject: MatchHistoriesEntity = res;
 
@@ -135,26 +91,36 @@ export const HomeScreenLogics = () => {
   };
 
   useEffect(() => {
-    getProfileConfig('Hide On Bushhhh')
-      .then(res => {
-        store.dispatch(userStore.actions.setUsers(res));
-
-        const timeOut = setTimeout(() => {
-          if (users) {
-            fnc_getArrayMatchId(users.puuid);
-
-            fnc_getRankAndChampionMastery(users.id);
-          }
-        }, 1500);
-
-        return () => {
-          clearTimeout(timeOut);
-        };
+    getAsyncProfileConfig
+      ?.execute('Hide On Bushhhh', API_KEY)
+      ?.then(res => {
+        console.log(res);
       })
       .catch(error => {
         console.log(error);
       });
   }, []);
+
+  useEffect(() => {
+    getLatestChampionDDragon();
+  }, []);
+
+  useEffect(() => {
+    getMatchId(users.puuid);
+  }, []);
+
+  useEffect(() => {
+    getAsyncRankFromUser?.execute(users.id)?.then(() => {
+      getAsyncChampionMastery
+        ?.execute(users.puuid, API_KEY)
+        ?.then(res => {
+          console.log(res);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    });
+  }, [users]);
 
   return {
     users,
@@ -164,5 +130,8 @@ export const HomeScreenLogics = () => {
     championMastery,
     baseURLImage,
     matchHistory,
+    getAsyncProfileConfig,
+    getAsyncRankFromUser,
+    getAsyncChampionMastery,
   };
 };

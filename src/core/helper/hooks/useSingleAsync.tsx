@@ -1,4 +1,5 @@
 import {useState, useCallback} from 'react';
+
 interface IState<T> {
   status: 'ready' | 'loading' | 'error';
   value?: T;
@@ -6,7 +7,9 @@ interface IState<T> {
 }
 
 export function useSingleAsync<T = any>(
-  asyncFunction: (...params: (number | object | string[]) | any) => Promise<T>,
+  asyncFunction: (
+    ...params: (number | object | string[] | undefined) | any
+  ) => Promise<T>,
 ) {
   const [state, setState] = useState<IState<T>>({
     status: 'ready',
@@ -14,7 +17,7 @@ export function useSingleAsync<T = any>(
     error: null,
   });
 
-  const onSuccess = useCallback((response: T) => {
+  const onSuccess = useCallback(response => {
     setState(prevState => ({
       ...prevState,
       status: 'ready',
@@ -33,10 +36,11 @@ export function useSingleAsync<T = any>(
   }, []);
 
   const execute = useCallback(
-    (...args: (number | object | string)[]) => {
+    (...args: (number | object | string | undefined)[]) => {
       if (!asyncFunction) {
-        return Promise.reject();
+        return;
       }
+
       setState(prevState => ({
         ...prevState,
         status: 'loading',
@@ -52,7 +56,7 @@ export function useSingleAsync<T = any>(
   );
 
   if (!asyncFunction) {
-    return Promise.reject();
+    return;
   }
   return {execute, ...state};
 }

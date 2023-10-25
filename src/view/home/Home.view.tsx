@@ -34,7 +34,8 @@ export const HomeScreen: React.FC<any> = () => {
           <FullScreenLoadingIndicator
             visible={
               getAsyncProfileConfig?.status === 'loading' ||
-              getAsyncRankFromUser?.status === 'loading'
+              getAsyncRankFromUser?.status === 'loading' ||
+              getAsyncChampionMastery?.status === 'loading'
             }
           />
         ) : (
@@ -51,27 +52,30 @@ export const HomeScreen: React.FC<any> = () => {
             <View style={styles.containerTextChampMastery}>
               <Text style={styles.textMastery}>Your Champions</Text>
             </View>
-            <FlatList
-              style={styles.flatlistChampionMastery}
-              horizontal={true}
-              nestedScrollEnabled={true}
-              keyExtractor={item => item.championId + ''}
-              data={championMastery.slice(0, 10)}
-              renderItem={({item, index}) => (
-                <ItemChampionMastery
-                  imageChampion={{
-                    uri: `${baseURLImage}${
-                      findChampionById(data, item.championId.toString())?.id +
-                      '_0'
-                    }.jpg`,
-                  }}
-                  championLevel={item.championLevel}
-                  championId={item.championId.toString()}
-                  indexItem={index}
-                  data={data}
-                />
-              )}
-            />
+            {championMastery !== null ? (
+              <FlatList
+                style={styles.flatlistChampionMastery}
+                horizontal={true}
+                nestedScrollEnabled={true}
+                keyExtractor={item => item.championId + ''}
+                data={championMastery.slice(0, 10)}
+                renderItem={({item, index}) => (
+                  <ItemChampionMastery
+                    imageChampion={{
+                      uri: `${baseURLImage}${
+                        findChampionById(data, item.championId.toString())?.id +
+                        '_0'
+                      }.jpg`,
+                    }}
+                    championLevel={item.championLevel}
+                    championId={item.championId.toString()}
+                    indexItem={index}
+                    data={data}
+                  />
+                )}
+              />
+            ) : null}
+
             <View style={styles.containerChampRecommend}>
               <Text style={styles.textMastery}>Recommend Champions</Text>
             </View>

@@ -1,10 +1,4 @@
-import {
-  createAction,
-  createSlice,
-  PayloadAction,
-  Selector,
-} from '@reduxjs/toolkit';
-
+import {createSlice, PayloadAction, Selector} from '@reduxjs/toolkit';
 import {RootState} from '~modules';
 import UserEntity from './entity';
 
@@ -15,8 +9,16 @@ interface IStore {
 const userStore = createSlice({
   name: 'userStore',
   initialState: {
-    users: null,
-  } as any as IStore,
+    users: {
+      id: '',
+      accountId: '',
+      puuid: '',
+      name: '',
+      profileIconId: 0,
+      revisionData: 0,
+      summonerLevel: 0,
+    },
+  } as IStore,
   reducers: {
     setUsers: (state, action: PayloadAction<UserEntity>) => {
       return {

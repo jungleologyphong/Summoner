@@ -9,7 +9,6 @@ export const getProfileConfig = async (
   return await httpRepository.execute({
     path: `/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${API_KEY}`,
     method: 'get',
-
     showSuccess: true,
     showError: false,
     convert: res => res.data,
@@ -21,7 +20,7 @@ export const getRankFromUser = async (
   API_KEY: string,
 ): Promise<RankedEntity[]> => {
   return await httpRepository.execute({
-    path: `/lol/league/v4/entries/by-summoner/${encryptedSummonerId}?api_key=${API_KEY}`,
+    path: `https://vn2.api.riotgames.com/lol/league/v4/entries/by-summoner/${encryptedSummonerId}?api_key=${API_KEY}`,
     method: 'get',
     showSuccess: true,
     showError: false,

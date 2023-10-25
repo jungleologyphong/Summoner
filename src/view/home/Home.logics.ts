@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable no-console */
 import {MatchHistoriesSelector} from './../../modules/matchHistory/matchHistoriesStore';
 import {useEffect, useRef, useState} from 'react';
@@ -27,8 +28,10 @@ export const HomeScreenLogics = () => {
   const rankedOfUser = useSelector(RankedSelector);
   const championMastery = useSelector(ChampionMasterySelector);
   const matchHistory = useSelector(MatchHistoriesSelector);
-  const API_KEY = 'RGAPI-fb946d7f-ce31-4ad9-ae1d-2d369d561820';
+  const API_KEY = 'RGAPI-eeb3672a-17be-4b4d-87a2-f532644779e6';
   const baseURLImage = `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/`;
+  const baseURLChampionDDragon =
+    'https://ddragon.leagueoflegends.com/cdn/13.19.1/data/vi_VN/champion.json';
   const {getProfileConfig, getRankFromUser} = userPresenter;
   const {getChampionMastery} = championMasteryPresenter;
   const getAsyncProfileConfig = useSingleAsync(getProfileConfig);
@@ -36,14 +39,10 @@ export const HomeScreenLogics = () => {
   const getAsyncChampionMastery = useSingleAsync(getChampionMastery);
 
   const getLatestChampionDDragon = async () => {
-    axios
-      .get(
-        'https://ddragon.leagueoflegends.com/cdn/13.19.1/data/vi_VN/champion.json',
-      )
-      .then(res => {
-        const arr: ChampionEntity[] = Object.values(res.data.data);
-        setData(arr);
-      });
+    await axios.get(baseURLChampionDDragon).then(res => {
+      const arr: ChampionEntity[] = Object.values(res.data.data);
+      setData(arr);
+    });
   };
 
   const getMatchId = async (puuid: string) => {
@@ -102,25 +101,28 @@ export const HomeScreenLogics = () => {
   }, []);
 
   useEffect(() => {
-    getLatestChampionDDragon();
-  }, []);
+    getAsyncRankFromUser
+      ?.execute(users.id, API_KEY)
+      ?.then(() => {
+        getAsyncChampionMastery
+          ?.execute(users.puuid, API_KEY)
+          ?.then(() => {})
+          .catch(error => {
+            console.log(error);
+          });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, [users]);
 
   useEffect(() => {
     getMatchId(users.puuid);
-  }, []);
+  }, [users]);
 
   useEffect(() => {
-    getAsyncRankFromUser?.execute(users.id)?.then(() => {
-      getAsyncChampionMastery
-        ?.execute(users.puuid, API_KEY)
-        ?.then(res => {
-          console.log(res);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    });
-  }, [users]);
+    getLatestChampionDDragon();
+  }, []);
 
   return {
     users,

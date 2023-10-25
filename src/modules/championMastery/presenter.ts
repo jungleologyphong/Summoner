@@ -1,5 +1,5 @@
 import store from '~core/store';
-import * as repository from './repository';
+import * as repository from './repositoryy';
 import championMasteryStore from './champMasteryStore';
 
 const championMasteryPresenter = {...repository};

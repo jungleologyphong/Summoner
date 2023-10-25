@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android-dev": "react-native run-android --no-jetifier --variant=devDebug --appId 'com.altaTemplate' ",
+    "android-dev": "react-native run-android --no-jetifier --variant=devDebug --appId 'com.altaTemplate.dev' ",
     "android-pro": "ENVFILE=.env.pro react-native run-android --no-jetifier --variant=proDebug --appId 'com.altaTemplate.pro' ",
     "ios-dev": "react-native run-ios --scheme EnvDev --configuration DebugDev",
     "ios-pro": "react-native run-ios --scheme EnvPro --configuration DebugPro",
